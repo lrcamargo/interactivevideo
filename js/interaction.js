@@ -1,15 +1,14 @@
 var video1;
 var formattedHalfWay = 0;
 var videoHalfWay = 0;
+var a = 0;
 
 // Escolhas
-var choicePart = 7;
-var goodChoicePart = 7;
-var badChoicePart = 20;
+var choicePart = [7,10,15];
 var goodChoiceChosen = false;
 
 // Perguntas
-var question1Asked = false;
+var questionAsked = [false,false,false];
 
 $(document).ready(function(){
 	
@@ -17,6 +16,9 @@ $(document).ready(function(){
 
 	video1 = $('#video1');
 
+	var questions = document.querySelectorAll(".question");
+	
+	console.log(questions);
 	//Info
 	$('.box1').on('click', function() {
 		playPause('.persona1PopUp');
@@ -28,12 +30,21 @@ $(document).ready(function(){
 	//Choices
 	$('.goodChoice').on('click', function() {
 		goodChoiceChosen = true;
+		console.log("ok");
 		$.featherlight.close();
-		video1[0].currentTime = goodChoicePart;
+		if(questionAsked[a]){
+			video1[0].play();
+		}
 	});
 	$('.badChoice').on('click', function() {
+		goodChoiceChosen = false;
 		$.featherlight.close();
-		video1[0].currentTime = badChoicePart;
+		if(a-1==0) {
+			video1[0].currentTime = 0;
+		} else {
+			var newTime = choicePart[a-2];
+			video1[0].currentTime = newTime;
+		}
 	});
 
 	//Video time
@@ -47,13 +58,15 @@ $(document).ready(function(){
 
 		onTrackedVideo(currentTime, durationNum);
 
-		if(currentTime == choicePart && question1Asked == false) {
-			question1Asked = true;
-			video1[0].pause();
-			//showChoiceQuestion();
-			$.featherlight($('.question1'));
+		if(currentTime == choicePart[a]) {
+			if(questionAsked[a] == false) {
+				questionAsked[a] = true;
+				console.log(questionAsked[a]);
+				showChoiceQuestion('.question',a);
+			}
 		}
 		
+						
 		if(currentTime == badChoicePart && goodChoiceChosen == true) {
 			video1[0].pause();
 			video1[0].currentTime=durationNum;
@@ -78,8 +91,10 @@ function playPause(popUp) {
 	}
 }
 
-function showChoiceQuestion() {
-	$.featherlight($('.question1'));
+function showChoiceQuestion(question,i) {
+	video1[0].pause();
+	$.featherlight($(question+'.q'+i))
+	a = a+1;
 }
 
 function onTrackedVideo(currentTime, duration) {
