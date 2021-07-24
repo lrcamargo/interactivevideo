@@ -4,11 +4,11 @@ var videoHalfWay = 0;
 var a = 0;
 
 // Escolhas
-var choicePart = [7,10,15];
+var choicePart = [];
 var goodChoiceChosen = false;
 
 // Perguntas
-var questionAsked = [false,false,false];
+var questionAsked = [];
 
 $(document).ready(function(){
 	
@@ -17,15 +17,19 @@ $(document).ready(function(){
 	video1 = $('#video1');
 
 	var questions = document.querySelectorAll(".question");
-	
-	console.log(questions);
+	for (var i = 0; i<questions.length; i++) {
+		choicePart.push(questions[i].id);
+		questionAsked.push(false);
+		console.log(choicePart);
+	}
+	//console.log(questions[0].id);
 	//Info
-	$('.box1').on('click', function() {
+	/*$('.box1').on('click', function() {
 		playPause('.persona1PopUp');
 	}); 
 	$('.box2').on('click', function() {
 		playPause('.persona2PopUp');
-	}); 
+	});*/ 
 
 	//Choices
 	$('.goodChoice').on('click', function() {
@@ -38,6 +42,7 @@ $(document).ready(function(){
 	});
 	$('.badChoice').on('click', function() {
 		goodChoiceChosen = false;
+		questionAsked[a-1]=false;
 		$.featherlight.close();
 		if(a-1==0) {
 			video1[0].currentTime = 0;
@@ -45,6 +50,8 @@ $(document).ready(function(){
 			var newTime = choicePart[a-2];
 			video1[0].currentTime = newTime;
 		}
+		a=a-1;
+		console.log(a);
 	});
 
 	//Video time
@@ -61,16 +68,15 @@ $(document).ready(function(){
 		if(currentTime == choicePart[a]) {
 			if(questionAsked[a] == false) {
 				questionAsked[a] = true;
-				console.log(questionAsked[a]);
 				showChoiceQuestion('.question',a);
 			}
 		}
 		
 						
-		if(currentTime == badChoicePart && goodChoiceChosen == true) {
-			video1[0].pause();
-			video1[0].currentTime=durationNum;
-		}
+		//if(currentTime == badChoicePart && goodChoiceChosen == true) {
+		//	video1[0].pause();
+		//	video1[0].currentTime=durationNum;
+		//}
 
 		if(currentTime == videoHalfWay) {
 			//Metade do vídeo

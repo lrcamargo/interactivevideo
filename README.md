@@ -11,8 +11,10 @@ Criação de website com vídeo interativo.
 - [ ] Adicionar áreas clicáveis em múltiplos vídeos pelo site.
 _____________________________________________________________________
 
-Release versão 1.0 - checklist 1
-Release versão 1.1 - checklist 2
+- Release versão 1.0 - checklist 1
+- Release versão 1.1 - checklist 2
+- Release versão 1.2 - checklist 4,5
+- Release versão 1.3 - bugfix - checklist 4,5
 ______________________________________________________________________
 
 Update 19/07:

@@ -61,3 +61,7 @@ img {
 .longBtns {
     display: block;
 }
+
+.btnAdd {
+    margin-left: 5%;
+}
