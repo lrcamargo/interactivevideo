@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+<?php
+	session_start();
+    
+    if((!isset ($_SESSION['user']) == true)) {
+        unset($_SESSION['user']);
+        unset($_SESSION['id']);
+        header('location:index.php');    
+    }
+    
+    $logado = $_SESSION['user'];
+	$id = $_SESSION['id'];
+?>
 <html>
     <head>
     <title>Interactive Video</title>
@@ -33,6 +46,7 @@
                 Arquivo:
                 <br/>
                 <input type="file" name="video">
+                <input type="hidden" value=<?php echo $id;?> name="id">
                 <br/>
                 <input type="submit" value="Enviar arquivo" class='button button-primary'/>
             </form>

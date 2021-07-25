@@ -32,26 +32,22 @@
 		<div class="row"></div>
 		<p><h4 style="text-align: center">Vídeos Interativos</h4></p>
 		<br/>
-		<h5>Escolha o vídeo que deseja assistir:</h5>
+		<h5>Faça login:</h5>
 		<br/>
-		<ul>
-			<?php
-				try {
-					$buscaVideos = $conn->prepare("SELECT * FROM video");
-					$buscaVideos->execute();
-
-					while($row = $buscaVideos->fetch(PDO::FETCH_ASSOC)) {
-						echo "<li><a href='videos.php?id=".$row['idVideo']."' class='button'>".$row['identificacao']."</a>    <a href='perguntas.php?video=".$row['idVideo']."' class='button button-primary btnAdd'>+ Adicionar perguntas </a></li>";
-					}
-				} catch (PDOException $e) {
-					echo "Erro: " . $e;
-				}
-			?>
-		</ul>
+		<form action="login.php" method="post">
+			Usuário: <input type="text" name="username">
+			Senha: <input type="password" name="senha">
+			<input type="submit" value="Login" class="button button-primary">
+		</form>
 		<br/>
-		<h5> Ou adicione um novo vídeo:	</h5>
+		<h5> Ou cadastre-se</h5>
 		<br/>
-		<a href="adiciona.html" class='button button-primary'>Adicionar</a>
+		<form action="register.php" method="post">
+			E-mail: <input type="text" name="email">
+			Usuário: <input type="text" name="username">
+			Senha: <input type="password" name="senha">
+			<input type="submit" value="Registrar" class="button button-primary">
+		</form>
 		</div>
 		
 	</div> <!--container end-->

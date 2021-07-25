@@ -1,27 +1,25 @@
 <?php
-    include('conexao.php');
-
     $nome = $_POST['identificacao'];
     $descricao = $_POST['descricao'];
+    $idUSer = $_POST['id'];
 
     $uploaddir = './media/';
-    //$uploadfile = $uploaddir . basename($_FILES['video']['name']);
     $extensao = explode(".", $_FILES['video']['name']);
     $uploadfile = $uploaddir . $nome . "." . $extensao[1];
 
     if (move_uploaded_file($_FILES['video']['tmp_name'], $uploadfile)) {
+        include('conexao.php');
         try {
             $videoUpload = $conn->prepare('INSERT INTO video(identificacao,localArquivo,descricao,autor) VALUES (?,?,?,?)');
             $videoUpload->bindValue(1,$nome);
             $videoUpload->bindValue(2,$uploadfile);
-            //Mudar para usuário logado
             $videoUpload->bindValue(3,$descricao);
-            $videoUpload->bindValue(4,"1");
+            $videoUpload->bindValue(4,$idUSer);
                
             $videoUpload->execute();
         
             if($videoUpload->rowCount() > 0) {
-                header('Location: index.php');
+                header('Location: main.php');
                 //echo "Cadastrado";
                 //echo "Arquivo válido e enviado com sucesso.\n";
             } else {
